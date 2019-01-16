@@ -22,9 +22,15 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "android": {
+      "package": "com.expo.turtle.cli.example"
+    },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.expo.turtle.cli.example"
+      "bundleIdentifier": "com.expo.turtle.cli.example",
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     }
   }
 }
