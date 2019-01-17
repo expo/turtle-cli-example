@@ -2,6 +2,10 @@
 
 This is just a simple Expo app (generated with `expo init` command, `expo-template-tabs` template) that uses [CircleCI](https://circleci.com) and [Travis CI](https://travis-ci.org/) to build Expo standalone apps (for Android and iOS). It demonstrates how to leverage [turtle-cli](https://www.npmjs.com/package/turtle-cli) to build `.apk`/`.ipa` files without the need to use the Expo servers.
 
+## Issues
+
+If you have problems with the code in this repository, please file issues & bug reports at https://github.com/expo/turtle/issues. Thanks!
+
 ## CI pipelines
 
 The CI pipelines consist of two stages. In the first stage we publish the Expo project to the Expo servers using the `expo publish` command (see [Publishing](https://docs.expo.io/versions/latest/workflow/publishing) to learn more, if you would like to host your app on your own server, [see this guide](https://docs.expo.io/versions/latest/distribution/hosting-your-app)). In the second stage we build application binaries for:
