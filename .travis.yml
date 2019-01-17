@@ -1,0 +1,116 @@
+
+language: node_js
+node_js:
+  - "8.12"
+sudo: false
+
+branches:
+  only:
+  - master
+
+env:
+  global:
+    - EXPO_SDK_VERSION="32.0.0"
+    - TURTLE_VERSION="0.5.1"
+    - YARN_VERSION="1.10.1"
+
+jobs:
+  include:
+    - stage: publish app
+      env:
+        - CACHE_NAME=publish YARN_CACHE_FOLDER="/home/travis/yarn_cache"
+      cache:
+        directories:
+          - $HOME/yarn_cache
+      before_install:
+        - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
+        - export PATH="$HOME/.yarn/bin:$PATH"
+      install:
+        - yarn global add expo-cli
+      script:
+        - expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD --non-interactive
+        - yarn
+        - expo publish
+    - stage: build standalone apps
+      env:
+        - CACHE_NAME=build-android YARN_CACHE_FOLDER="/home/travis/yarn_cache"
+      cache:
+        directories:
+          - $HOME/.turtle
+          - $HOME/yarn_cache
+          - $HOME/.gradle/wrapper
+      before_install:
+        - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
+        - export PATH="$HOME/.yarn/bin:$PATH"
+      install:
+        - pip install --user awscli
+        - yarn global add gulp-cli turtle-cli@$TURTLE_VERSION
+      script:
+        - export ARTIFACT_PATH="/home/travis/expo-project-$TRAVIS_COMMIT-`date +%s`.apk"
+        - turtle setup:android --sdk-version $EXPO_SDK_VERSION || travis_terminate 1
+        - echo $EXPO_ANDROID_KEYSTORE_BASE64 > expo-project.jks.base64
+        - base64 --decode expo-project.jks.base64 > expo-project.jks
+        - turtle build:android
+            --keystore-path ./expo-project.jks
+            --keystore-alias $EXPO_ANDROID_KEYSTORE_ALIAS
+            -o $ARTIFACT_PATH
+      after_success:
+        - aws s3 cp $ARTIFACT_PATH s3://$AWS_BUCKET/`basename $ARTIFACT_PATH`
+    - stage: build standalone apps
+      os: osx
+      osx_image: xcode9.4
+      env:
+        - CACHE_NAME=build-ios-simulator YARN_CACHE_FOLDER="/Users/travis/yarn_cache"
+      cache:
+        directories:
+          - $HOME/.turtle
+          - $HOME/yarn_cache
+      before_install:
+        - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
+        - export PATH="$HOME/.yarn/bin:$PATH"
+      install:
+        - pip install --user awscli
+        - export PATH=/Users/travis/Library/Python/2.7/bin:$PATH
+        - yarn global add turtle-cli@$TURTLE_VERSION
+      script:
+        - export ARTIFACT_PATH="/Users/travis/expo-project-$TRAVIS_COMMIT-`date +%s`.tar.gz"
+        - turtle setup:ios --sdk-version $EXPO_SDK_VERSION || travis_terminate 1
+        - turtle build:ios
+            --team-id $EXPO_APPLE_TEAM_ID
+            --type simulator
+            -o $ARTIFACT_PATH
+      after_success:
+        - aws s3 cp $ARTIFACT_PATH s3://$AWS_BUCKET/`basename $ARTIFACT_PATH`
+    - stage: build standalone apps
+      os: osx
+      osx_image: xcode9.4
+      env:
+        - CACHE_NAME=build-ios-ipa YARN_CACHE_FOLDER="/Users/travis/yarn_cache"
+      cache:
+        directories:
+          - $HOME/.turtle
+          - $HOME/yarn_cache
+      before_install:
+        - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
+        - export PATH="$HOME/.yarn/bin:$PATH"
+      install:
+        - pip install --user awscli
+        - export PATH=/Users/travis/Library/Python/2.7/bin:$PATH
+        - yarn global add turtle-cli@$TURTLE_VERSION
+      script:
+        - export ARTIFACT_PATH="/Users/travis/expo-project-$TRAVIS_COMMIT-`date +%s`.ipa"
+        - turtle setup:ios --sdk-version $EXPO_SDK_VERSION || travis_terminate 1
+        - echo $EXPO_IOS_DIST_P12_BASE64 > expo-project_dist.p12.base64
+        - base64 --decode expo-project_dist.p12.base64 > expo-project_dist.p12
+        - echo $EXPO_IOS_PUSH_P12_BASE64 > expo-project_push.p12.base64
+        - base64 --decode expo-project_push.p12.base64 > expo-project_push.p12
+        - echo $EXPO_IOS_PROVISIONING_PROFILE_BASE64 > expo-project.mobileprovision.base64
+        - base64 --decode expo-project.mobileprovision.base64 > expo-project.mobileprovision
+        - turtle build:ios
+            --team-id $EXPO_APPLE_TEAM_ID
+            --dist-p12-path ./expo-project_dist.p12
+            --push-p12-path ./expo-project_push.p12
+            --provisioning-profile-path ./expo-project.mobileprovision
+            -o $ARTIFACT_PATH
+      after_success:
+        - aws s3 cp $ARTIFACT_PATH s3://$AWS_BUCKET/`basename $ARTIFACT_PATH`
