@@ -16,7 +16,7 @@ executors:
       - image: dsokal/expo-turtle-android
     working_directory: ~/expo-project
     environment:
-      TURTLE_VERSION: 0.5.1
+      TURTLE_VERSION: 0.5.2
       PLATFORM: android
       YARN_CACHE_FOLDER: ~/yarn_cache
 
@@ -25,7 +25,7 @@ executors:
       xcode: 10.1.0
     working_directory: ~/expo-project
     environment:
-      TURTLE_VERSION: 0.5.1
+      TURTLE_VERSION: 0.5.2
       PLATFORM: ios
       YARN_CACHE_FOLDER: /Users/distiller/yarn_cache
       HOMEBREW_NO_AUTO_UPDATE: 1
