@@ -7,6 +7,7 @@ sudo: false
 branches:
   only:
   - master
+  - @dsokal/fix-android-license-issue
 
 env:
   global:
