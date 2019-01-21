@@ -33,7 +33,7 @@ jobs:
         - expo publish
     - stage: build standalone apps
       env:
-        - CACHE_NAME=build-android YARN_CACHE_FOLDER="/home/travis/yarn_cache"
+        - CACHE_NAME=build-android-v2 YARN_CACHE_FOLDER="/home/travis/yarn_cache"
       cache:
         directories:
           - $HOME/.turtle
