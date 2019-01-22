@@ -53,7 +53,7 @@ jobs:
         - turtle build:android
             --keystore-path ./expo-project.jks
             --keystore-alias $EXPO_ANDROID_KEYSTORE_ALIAS
-            -o $ARTIFACT_PATH
+            -o $ARTIFACT_PATH > /dev/null
       after_success:
         - aws s3 cp $ARTIFACT_PATH s3://$AWS_BUCKET/`basename $ARTIFACT_PATH`
     - stage: build standalone apps
