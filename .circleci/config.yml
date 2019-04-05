@@ -41,7 +41,7 @@ commands:
           command: |
             bundle check || bundle install --path vendor/bundle
             sudo rm /usr/local/bin/fastlane
-            sudo ln -s /Library/Ruby/Gems/2.3.0/gems/fastlane-2.99.0/bin/fastlane /usr/local/bin/fastlane
+            sudo ln -s /Users/distiller/expo-project/vendor/bundle/ruby/2.3.0/bin/fastlane /usr/local/bin/fastlane
 
       - save_cache:
           key: 1-gems-{{ checksum "Gemfile.lock" }}
