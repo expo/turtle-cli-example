@@ -36,7 +36,7 @@ commands:
       - run:
           name: dupa
           command: |
-            yes | sudo gem uninstall fastlane
+            yes | sudo gem uninstall -I fastlane
             yes | sudo gem install fastlane -v 2.99.0
 
       - run:
