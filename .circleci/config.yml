@@ -36,8 +36,8 @@ commands:
       - run:
           name: dupa
           command: |
-            sudo gem uninstall fastlane
-            sudo gem install fastlane -v 2.99.0
+            yes | sudo gem uninstall fastlane
+            yes | sudo gem install fastlane -v 2.99.0
 
       - run:
           name: Installing jq
