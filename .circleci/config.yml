@@ -34,6 +34,12 @@ commands:
   install_macos_deps:
     steps:
       - run:
+          name: dupa
+          command: |
+            sudo gem uninstall fastlane
+            sudo gem install fastlane -v 2.99.0
+
+      - run:
           name: Installing jq
           command: brew install jq
 
@@ -104,10 +110,10 @@ workflows:
       #     filters:
       #       branches:
       #         only: master
-      - build_ios_simulator
+      # - build_ios_simulator
           # requires:
             # - publish_app
-      # - build_ios_archive
+      - build_ios_archive
           # requires:
             # - publish_app
       # - build_android:
