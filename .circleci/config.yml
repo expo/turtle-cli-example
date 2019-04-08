@@ -107,7 +107,7 @@ workflows:
       - build_ios_simulator
           # requires:
             # - publish_app
-      - build_ios_archive
+      # - build_ios_archive
           # requires:
             # - publish_app
       # - build_android:
