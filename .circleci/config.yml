@@ -166,20 +166,20 @@ jobs:
       - install_macos_deps
       - determine_expo_sdk_version
       - add_yarn_binaries_to_path
-      - determine_turtle_cache_key_component
-      - restore_turtle_cache
-      - install_turtle_ios
-      - setup_turtle
-      - save_turtle_cache
-      - run:
-          name: Building Expo standalone app
-          command: |
-            turtle build:ios \
-              --team-id $EXPO_APPLE_TEAM_ID \
-              --type simulator \
-              -o ~/expo-project.tar.gz
-      - store_artifacts:
-          path: ~/expo-project.tar.gz
+      # - determine_turtle_cache_key_component
+      # - restore_turtle_cache
+      # - install_turtle_ios
+      # - setup_turtle
+      # - save_turtle_cache
+      # - run:
+      #     name: Building Expo standalone app
+      #     command: |
+      #       turtle build:ios \
+      #         --team-id $EXPO_APPLE_TEAM_ID \
+      #         --type simulator \
+      #         -o ~/expo-project.tar.gz
+      # - store_artifacts:
+      #     path: ~/expo-project.tar.gz
 
   build_android:
     executor: android
