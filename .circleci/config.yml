@@ -33,21 +33,6 @@ executors:
 commands:
   install_macos_deps:
     steps:
-      - restore_cache:
-          key: 1-gems-{{ checksum "Gemfile.lock" }}
-
-      - run:
-          name: dupa
-          command: |
-            bundle check || bundle install --path vendor/bundle
-            sudo rm /usr/local/bin/fastlane
-            sudo ln -s /Users/distiller/expo-project/vendor/bundle/ruby/2.3.0/bin/fastlane /usr/local/bin/fastlane
-
-      - save_cache:
-          key: 1-gems-{{ checksum "Gemfile.lock" }}
-          paths:
-            - vendor/bundle
-
       - run:
           name: Installing jq
           command: brew install jq
