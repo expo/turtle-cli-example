@@ -10,10 +10,17 @@ executors:
 
   android:
     # WARNING: medium (default) seems not to be enough for Turtle
+    # To use larger resource classes you need to open a ticket and request it from CircleCI
+    # More Information Here - https://circleci.com/docs/2.0/configuration-reference/#resource_class
     resource_class: xlarge
     docker:
       # https://github.com/expo/expo-turtle-android
       - image: dsokal/expo-turtle-android
+    # NOTE: If you have macos machines you can use them instead.
+    # Comment out 'resource_class', 'docker' and 'image' and replace 
+    # with the comments below.
+    #  macos:
+    #    xcode: 10.1.0
     working_directory: ~/expo-project
     environment:
       TURTLE_VERSION: ${TURTLE_VERSION_NEW}
