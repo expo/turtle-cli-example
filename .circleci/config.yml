@@ -108,9 +108,9 @@ workflows:
   builds:
     jobs:
       - publish_app:
-          filters:
-            branches:
-              only: master
+          # filters:
+          #   branches:
+          #     only: master
       - build_ios_simulator:
           requires:
             - publish_app
