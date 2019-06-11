@@ -15,7 +15,7 @@ executors:
     resource_class: xlarge
     docker:
       # https://github.com/expo/expo-turtle-android
-      - image: dsokal/expo-turtle-android
+      - image: dsokal/expo-turtle-android:0.2.0
     # NOTE: If you have macos machines you can use them instead.
     # Comment out 'resource_class', 'docker' and 'image' and replace
     # with the comments below.
