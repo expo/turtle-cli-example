@@ -107,7 +107,7 @@ workflows:
   version: 2
   builds:
     jobs:
-      - publish_app:
+      - publish_app
           # filters:
           #   branches:
           #     only: master
