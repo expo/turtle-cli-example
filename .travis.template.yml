@@ -44,7 +44,7 @@ jobs:
         - export PATH="$HOME/.yarn/bin:$PATH"
       install:
         - pip install --user awscli
-        - yarn global add gulp-cli turtle-cli@$TURTLE_VERSION
+        - yarn global add turtle-cli@$TURTLE_VERSION
       script:
         - export ARTIFACT_PATH="/home/travis/expo-project-$TRAVIS_COMMIT-`date +%s`.apk"
         - turtle setup:android --sdk-version $EXPO_SDK_VERSION > /dev/null || travis_terminate 1
@@ -70,7 +70,7 @@ jobs:
         - export PATH="$HOME/.yarn/bin:$PATH"
       install:
         - pip install --user awscli
-        - yarn global add gulp-cli turtle-cli@$TURTLE_VERSION
+        - yarn global add turtle-cli@$TURTLE_VERSION
       script:
         - export ARTIFACT_PATH="/home/travis/expo-project-$TRAVIS_COMMIT-`date +%s`.aab"
         - turtle setup:android --sdk-version $EXPO_SDK_VERSION > /dev/null || travis_terminate 1

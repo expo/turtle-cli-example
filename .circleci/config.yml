@@ -17,13 +17,13 @@ executors:
       # https://github.com/expo/expo-turtle-android
       - image: dsokal/expo-turtle-android
     # NOTE: If you have macos machines you can use them instead.
-    # Comment out 'resource_class', 'docker' and 'image' and replace 
+    # Comment out 'resource_class', 'docker' and 'image' and replace
     # with the comments below.
     #  macos:
     #    xcode: 10.1.0
     working_directory: ~/expo-project
     environment:
-      TURTLE_VERSION: 0.8.4
+      TURTLE_VERSION: 0.8.5-beta.0
       PLATFORM: android
       YARN_CACHE_FOLDER: ~/yarn_cache
 
@@ -32,7 +32,7 @@ executors:
       xcode: 10.1.0
     working_directory: ~/expo-project
     environment:
-      TURTLE_VERSION: 0.8.4
+      TURTLE_VERSION: 0.8.5-beta.0
       PLATFORM: ios
       YARN_CACHE_FOLDER: /Users/distiller/yarn_cache
       HOMEBREW_NO_AUTO_UPDATE: 1
@@ -107,10 +107,7 @@ workflows:
   version: 2
   builds:
     jobs:
-      - publish_app:
-          filters:
-            branches:
-              only: master
+      - publish_app
       - build_ios_simulator:
           requires:
             - publish_app
@@ -200,8 +197,8 @@ jobs:
       - determine_turtle_cache_key_component
       - restore_turtle_cache
       - run:
-          name: Installing gulp-cli & turtle-cli
-          command: yarn global add gulp-cli turtle-cli@$TURTLE_VERSION
+          name: Installing turtle-cli
+          command: yarn global add turtle-cli@$TURTLE_VERSION
       - setup_turtle
       - save_turtle_cache
       - run:
@@ -226,8 +223,8 @@ jobs:
       - determine_turtle_cache_key_component
       - restore_turtle_cache
       - run:
-          name: Installing gulp-cli & turtle-cli
-          command: yarn global add gulp-cli turtle-cli@$TURTLE_VERSION
+          name: Installing turtle-cli
+          command: yarn global add turtle-cli@$TURTLE_VERSION
       - setup_turtle
       - save_turtle_cache
       - run:

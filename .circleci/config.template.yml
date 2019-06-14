@@ -17,7 +17,7 @@ executors:
       # https://github.com/expo/expo-turtle-android
       - image: dsokal/expo-turtle-android
     # NOTE: If you have macos machines you can use them instead.
-    # Comment out 'resource_class', 'docker' and 'image' and replace 
+    # Comment out 'resource_class', 'docker' and 'image' and replace
     # with the comments below.
     #  macos:
     #    xcode: 10.1.0
@@ -200,8 +200,8 @@ jobs:
       - determine_turtle_cache_key_component
       - restore_turtle_cache
       - run:
-          name: Installing gulp-cli & turtle-cli
-          command: yarn global add gulp-cli turtle-cli@$TURTLE_VERSION
+          name: Installing turtle-cli
+          command: yarn global add turtle-cli@$TURTLE_VERSION
       - setup_turtle
       - save_turtle_cache
       - run:
@@ -226,8 +226,8 @@ jobs:
       - determine_turtle_cache_key_component
       - restore_turtle_cache
       - run:
-          name: Installing gulp-cli & turtle-cli
-          command: yarn global add gulp-cli turtle-cli@$TURTLE_VERSION
+          name: Installing turtle-cli
+          command: yarn global add turtle-cli@$TURTLE_VERSION
       - setup_turtle
       - save_turtle_cache
       - run:
