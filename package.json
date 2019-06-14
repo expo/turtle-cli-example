@@ -1,24 +1,8 @@
 {
   "main": "node_modules/expo/AppEntry.js",
-  "scripts": {
-    "start": "expo start",
-    "test": "node ./node_modules/jest/bin/jest.js --watchAll",
-    "update-turtle-cli-version": "./update-turtle-cli-version.sh"
-  },
-  "jest": {
-    "preset": "jest-expo"
-  },
   "dependencies": {
-    "@expo/samples": "2.1.1",
-    "expo": "^33.0.0",
-    "react": "16.8.3",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
-    "react-navigation": "^3.11.0"
-  },
-  "devDependencies": {
-    "babel-preset-expo": "^5.0.0",
-    "envsub": "^3.0.9",
-    "jest-expo": "^33.0.0"
-  },
-  "private": true
+    "expo": "^28.0.0",
+    "react": "16.3.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-28.0.0.tar.gz"
+  }
 }

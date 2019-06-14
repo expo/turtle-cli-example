@@ -1,9 +1,10 @@
 {
   "expo": {
-    "name": "turtle-cli-example",
-    "slug": "turtle-cli-example",
+    "name": "expo28",
+    "description": "This project is really great.",
+    "slug": "expo28",
     "privacy": "public",
-    "sdkVersion": "33.0.0",
+    "sdkVersion": "28.0.0",
     "platforms": [
       "ios",
       "android"
