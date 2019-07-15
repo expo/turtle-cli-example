@@ -1,7 +1,8 @@
+language: java
 
-language: node_js
-node_js:
-  - "8.12"
+jdk:
+  - openjdk8
+node_js: "8.12"
 sudo: false
 
 branches:
