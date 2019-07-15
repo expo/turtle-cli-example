@@ -43,20 +43,21 @@ jobs:
       before_install:
         - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
         - export PATH="$HOME/.yarn/bin:$PATH"
-      install:
-        - pip install --user awscli
-        - yarn global add gulp-cli turtle-cli@$TURTLE_VERSION
+      # install:
+      #   - pip install --user awscli
+      #   - yarn global add gulp-cli turtle-cli@$TURTLE_VERSION
       script:
         - java -version
-        - export ARTIFACT_PATH="/home/travis/expo-project-$TRAVIS_COMMIT-`date +%s`.apk"
-        - turtle setup:android --sdk-version $EXPO_SDK_VERSION || travis_terminate 1
-        - echo $EXPO_ANDROID_KEYSTORE_BASE64 > expo-project.jks.base64
-        - base64 --decode expo-project.jks.base64 > expo-project.jks
-        - turtle build:android
-            --keystore-path ./expo-project.jks
-            --keystore-alias $EXPO_ANDROID_KEYSTORE_ALIAS
-            --type apk
-            -o $ARTIFACT_PATH
+        - node --version
+        # - export ARTIFACT_PATH="/home/travis/expo-project-$TRAVIS_COMMIT-`date +%s`.apk"
+        # - turtle setup:android --sdk-version $EXPO_SDK_VERSION || travis_terminate 1
+        # - echo $EXPO_ANDROID_KEYSTORE_BASE64 > expo-project.jks.base64
+        # - base64 --decode expo-project.jks.base64 > expo-project.jks
+        # - turtle build:android
+        #     --keystore-path ./expo-project.jks
+        #     --keystore-alias $EXPO_ANDROID_KEYSTORE_ALIAS
+        #     --type apk
+        #     -o $ARTIFACT_PATH
       after_success:
         - aws s3 cp $ARTIFACT_PATH s3://$AWS_BUCKET/`basename $ARTIFACT_PATH`
     # - stage: build standalone apps
