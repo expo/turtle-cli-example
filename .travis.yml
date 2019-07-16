@@ -1,7 +1,5 @@
 language: java
 
-jdk:
-  - openjdk8
 node_js: "8.12"
 sudo: false
 
@@ -17,24 +15,26 @@ env:
 
 jobs:
   include:
-    - stage: publish app
-      env:
-        - CACHE_NAME=publish YARN_CACHE_FOLDER="/home/travis/yarn_cache"
-      cache:
-        directories:
-          - $HOME/yarn_cache
-      before_install:
-        - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
-        - export PATH="$HOME/.yarn/bin:$PATH"
-      install:
-        - yarn global add expo-cli
-      script:
-        - expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD --non-interactive
-        - yarn
-        - expo publish
+    # - stage: publish app
+    #   env:
+    #     - CACHE_NAME=publish YARN_CACHE_FOLDER="/home/travis/yarn_cache"
+    #   cache:
+    #     directories:
+    #       - $HOME/yarn_cache
+    #   before_install:
+    #     - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
+    #     - export PATH="$HOME/.yarn/bin:$PATH"
+    #   install:
+    #     - yarn global add expo-cli
+    #   script:
+    #     - expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD --non-interactive
+    #     - yarn
+    #     - expo publish
     - stage: build standalone apps
       env:
         - CACHE_NAME=build-android-v2 YARN_CACHE_FOLDER="/home/travis/yarn_cache"
+      jdk:
+        - openjdk8
       cache:
         directories:
           - $HOME/.turtle
@@ -61,6 +61,8 @@ jobs:
     - stage: build standalone apps
       env:
         - CACHE_NAME=build-android-v2 YARN_CACHE_FOLDER="/home/travis/yarn_cache"
+      jdk:
+        - openjdk8
       cache:
         directories:
           - $HOME/.turtle
