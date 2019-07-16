@@ -1,7 +1,5 @@
 language: java
 
-jdk:
-  - openjdk8
 node_js: "8.12"
 sudo: false
 
@@ -35,6 +33,8 @@ jobs:
     - stage: build standalone apps
       env:
         - CACHE_NAME=build-android-v2 YARN_CACHE_FOLDER="/home/travis/yarn_cache"
+      jdk:
+        - openjdk8
       cache:
         directories:
           - $HOME/.turtle
@@ -61,6 +61,8 @@ jobs:
     - stage: build standalone apps
       env:
         - CACHE_NAME=build-android-v2 YARN_CACHE_FOLDER="/home/travis/yarn_cache"
+      jdk:
+        - openjdk8
       cache:
         directories:
           - $HOME/.turtle
