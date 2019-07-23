@@ -1,6 +1,8 @@
 #!/bin/bash
 
-export TURTLE_VERSION_NEW=`npm show turtle-cli version`
+TAG=${1:-latest}
+
+export TURTLE_VERSION_NEW=`npm show turtle-cli@$TAG version`
 envsubst '${TURTLE_VERSION_NEW}' < .circleci/config.template.yml > .circleci/config.yml
 envsubst '${TURTLE_VERSION_NEW}' < README.template.md > README.md
 envsubst '${TURTLE_VERSION_NEW}' < .travis.template.yml > .travis.yml
