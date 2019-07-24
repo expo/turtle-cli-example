@@ -1,0 +1,53 @@
+version: 2
+
+executor_node: &executor_node
+  working_directory: ~/turtle-deploy
+  docker:
+    - image: circleci/node:8
+
+setup_tools: &setup_tools
+  run:
+    name: Setup tools
+    command: |
+      sudo apt install gettext
+
+setup_git: &setup_git
+  run:
+    name: Setup git
+    command: |
+      # setup ssh key
+      mkdir -p ~/.ssh
+      (umask 077; touch ~/.ssh/id_rsa; touch ~/.ssh/id_rsa.pub)
+      echo $TURTLE_BOT_SSH_PRIVATE_KEY_BASE64 | base64 -d > ~/.ssh/id_rsa
+      echo $TURTLE_BOT_SSH_PUBLIC_KEY_BASE64 | base64 -d > ~/.ssh/id_rsa.pub
+      chmod 0600 ~/.ssh/id_rsa ~/.ssh/id_rsa.pub
+      ssh-add -D
+      ssh-add ~/.ssh/id_rsa
+      # configure git
+      git config --global user.name "Turtle Bot"
+      git config --global user.email "turtle-dev@expo.io"
+
+jobs:
+  build:
+    <<: *executor_node
+    steps:
+      - run:
+          name: Trigger an update using the CircleCI API
+          command: |
+            echo "Trigger an update using the CircleCI API"
+
+  update:
+    <<: *executor_node
+    steps:
+      - *setup_tools
+      - *setup_git
+      - checkout
+      - run:
+          name: Update turtle-cli on master
+          command: |
+            git fetch
+            git checkout origin/master
+            git branch -D master
+            git checkout -b master
+            yarn update-turtle-cli-version $TURTLE_TAG
+            git push origin master
