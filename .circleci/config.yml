@@ -43,7 +43,7 @@ commands:
       - run:
           name: Installing jq
           command: |
-            brew update
+            # brew update
             brew install jq
 
   determine_expo_sdk_version:
