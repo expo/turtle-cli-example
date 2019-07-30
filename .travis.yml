@@ -89,6 +89,8 @@ jobs:
     - stage: build standalone apps
       os: osx
       osx_image: xcode10.1
+      language: node_js
+      node_js: "8.12"
       env:
         - CACHE_NAME=build-ios-simulator YARN_CACHE_FOLDER="/Users/travis/yarn_cache"
       cache:
@@ -114,6 +116,8 @@ jobs:
     - stage: build standalone apps
       os: osx
       osx_image: xcode10.1
+      language: node_js
+      node_js: "8.12"
       env:
         - CACHE_NAME=build-ios-ipa YARN_CACHE_FOLDER="/Users/travis/yarn_cache"
       cache:
