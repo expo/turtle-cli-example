@@ -109,22 +109,22 @@ workflows:
   version: 2
   builds:
     jobs:
-      - publish_app:
-          filters:
-            branches:
-              only: master
+      # - publish_app:
+      #     filters:
+      #       branches:
+      #         only: master
       - build_ios_simulator:
           requires:
             - publish_app
-      - build_ios_archive:
-          requires:
-            - publish_app
-      - build_android_apk:
-          requires:
-            - publish_app
-      - build_android_aab:
-          requires:
-            - publish_app
+      # - build_ios_archive:
+      #     requires:
+      #       - publish_app
+      # - build_android_apk:
+      #     requires:
+      #       - publish_app
+      # - build_android_aab:
+      #     requires:
+      #       - publish_app
 
 jobs:
   publish_app:
