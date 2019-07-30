@@ -41,10 +41,10 @@ commands:
   install_macos_deps:
     steps:
       - run:
-          name: Installing jq
+          name: Installing jq & node@8
           command: |
-            # brew update
-            brew install jq
+            brew install jq node@8
+            brew link --overwrite --force node@8
 
   determine_expo_sdk_version:
     steps:
