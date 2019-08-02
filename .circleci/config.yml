@@ -1,31 +1,31 @@
 version: 2.1
 
 executors:
-  js:
-    docker:
-      - image: circleci/node:8.12
-    working_directory: ~/expo-project
-    environment:
-      YARN_CACHE_FOLDER: ~/yarn_cache
+  # js:
+  #   docker:
+  #     - image: circleci/node:8.12
+  #   working_directory: ~/expo-project
+  #   environment:
+  #     YARN_CACHE_FOLDER: ~/yarn_cache
 
-  android:
-    # WARNING: medium (default) seems not to be enough for Turtle
-    # To use larger resource classes you need to open a ticket and request it from CircleCI
-    # More Information Here - https://circleci.com/docs/2.0/configuration-reference/#resource_class
-    resource_class: xlarge
-    docker:
-      # https://github.com/expo/expo-turtle-android
-      - image: dsokal/expo-turtle-android
-    # NOTE: If you have macos machines you can use them instead.
-    # Comment out 'resource_class', 'docker' and 'image' and replace
-    # with the comments below.
-    #  macos:
-    #    xcode: 10.1.0
-    working_directory: ~/expo-project
-    environment:
-      TURTLE_VERSION: 0.10.0
-      PLATFORM: android
-      YARN_CACHE_FOLDER: ~/yarn_cache
+  # android:
+  #   # WARNING: medium (default) seems not to be enough for Turtle
+  #   # To use larger resource classes you need to open a ticket and request it from CircleCI
+  #   # More Information Here - https://circleci.com/docs/2.0/configuration-reference/#resource_class
+  #   resource_class: xlarge
+  #   docker:
+  #     # https://github.com/expo/expo-turtle-android
+  #     - image: dsokal/expo-turtle-android
+  #   # NOTE: If you have macos machines you can use them instead.
+  #   # Comment out 'resource_class', 'docker' and 'image' and replace
+  #   # with the comments below.
+  #   #  macos:
+  #   #    xcode: 10.1.0
+  #   working_directory: ~/expo-project
+  #   environment:
+  #     TURTLE_VERSION: 0.10.0
+  #     PLATFORM: android
+  #     YARN_CACHE_FOLDER: ~/yarn_cache
 
   ios:
     macos:
@@ -109,138 +109,139 @@ workflows:
   version: 2
   builds:
     jobs:
-      - publish_app:
-          filters:
-            branches:
-              only: master
-      - build_ios_simulator:
-          requires:
-            - publish_app
-      - build_ios_archive:
-          requires:
-            - publish_app
-      - build_android_apk:
-          requires:
-            - publish_app
-      - build_android_aab:
-          requires:
-            - publish_app
+      # - publish_app:
+      #     filters:
+      #       branches:
+      #         only: master
+      # - build_ios_simulator:
+      #     requires:
+      #       - publish_app
+      - build_ios_archive
+          # requires:
+          #   - publish_app
+      # - build_android_apk:
+      #     requires:
+      #       - publish_app
+      # - build_android_aab:
+      #     requires:
+      #       - publish_app
 
 jobs:
-  publish_app:
-    executor: js
-    steps:
-      - checkout
-      - add_yarn_binaries_to_path
-      - restore_yarn_cache
-      - run:
-          name: Installing expo-cli
-          command: yarn global add expo-cli
-      - run:
-          name: Publishing Expo app
-          command: |
-            expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD --non-interactive
-            yarn
-            expo publish
-      - save_yarn_cache
+  # publish_app:
+  #   executor: js
+  #   steps:
+  #     - checkout
+  #     - add_yarn_binaries_to_path
+  #     - restore_yarn_cache
+  #     - run:
+  #         name: Installing expo-cli
+  #         command: yarn global add expo-cli
+  #     - run:
+  #         name: Publishing Expo app
+  #         command: |
+  #           expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD --non-interactive
+  #           yarn
+  #           expo publish
+  #     - save_yarn_cache
 
   build_ios_archive:
     executor: ios
     steps:
       - checkout
-      - install_macos_deps
-      - determine_expo_sdk_version
-      - add_yarn_binaries_to_path
-      - determine_turtle_cache_key_component
-      - restore_turtle_cache
-      - install_turtle_ios
-      - setup_turtle
-      - save_turtle_cache
-      - run:
-          name: Building Expo standalone app
-          command: |
-            echo $EXPO_IOS_DIST_P12_BASE64 > expo-project_dist.p12.base64
-            base64 --decode expo-project_dist.p12.base64 > expo-project_dist.p12
-            echo $EXPO_IOS_PROVISIONING_PROFILE_BASE64 > expo-project.mobileprovision.base64
-            base64 --decode expo-project.mobileprovision.base64 > expo-project.mobileprovision
-            turtle build:ios \
-              --team-id $EXPO_APPLE_TEAM_ID \
-              --dist-p12-path ./expo-project_dist.p12 \
-              --provisioning-profile-path ./expo-project.mobileprovision \
-              -o ~/expo-project.ipa
-      - store_artifacts:
-          path: ~/expo-project.ipa
+      - run: true && false
+      # - install_macos_deps
+      # - determine_expo_sdk_version
+      # - add_yarn_binaries_to_path
+      # - determine_turtle_cache_key_component
+      # - restore_turtle_cache
+      # - install_turtle_ios
+      # - setup_turtle
+      # - save_turtle_cache
+      # - run:
+      #     name: Building Expo standalone app
+      #     command: |
+      #       echo $EXPO_IOS_DIST_P12_BASE64 > expo-project_dist.p12.base64
+      #       base64 --decode expo-project_dist.p12.base64 > expo-project_dist.p12
+      #       echo $EXPO_IOS_PROVISIONING_PROFILE_BASE64 > expo-project.mobileprovision.base64
+      #       base64 --decode expo-project.mobileprovision.base64 > expo-project.mobileprovision
+      #       turtle build:ios \
+      #         --team-id $EXPO_APPLE_TEAM_ID \
+      #         --dist-p12-path ./expo-project_dist.p12 \
+      #         --provisioning-profile-path ./expo-project.mobileprovision \
+      #         -o ~/expo-project.ipa
+      # - store_artifacts:
+      #     path: ~/expo-project.ipa
 
-  build_ios_simulator:
-    executor: ios
-    steps:
-      - checkout
-      - install_macos_deps
-      - determine_expo_sdk_version
-      - add_yarn_binaries_to_path
-      - determine_turtle_cache_key_component
-      - restore_turtle_cache
-      - install_turtle_ios
-      - setup_turtle
-      - save_turtle_cache
-      - run:
-          name: Building Expo standalone app
-          command: |
-            turtle build:ios \
-              --team-id $EXPO_APPLE_TEAM_ID \
-              --type simulator \
-              -o ~/expo-project.tar.gz
-      - store_artifacts:
-          path: ~/expo-project.tar.gz
+  # build_ios_simulator:
+  #   executor: ios
+  #   steps:
+  #     - checkout
+  #     - install_macos_deps
+  #     - determine_expo_sdk_version
+  #     - add_yarn_binaries_to_path
+  #     - determine_turtle_cache_key_component
+  #     - restore_turtle_cache
+  #     - install_turtle_ios
+  #     - setup_turtle
+  #     - save_turtle_cache
+  #     - run:
+  #         name: Building Expo standalone app
+  #         command: |
+  #           turtle build:ios \
+  #             --team-id $EXPO_APPLE_TEAM_ID \
+  #             --type simulator \
+  #             -o ~/expo-project.tar.gz
+  #     - store_artifacts:
+  #         path: ~/expo-project.tar.gz
 
-  build_android_apk:
-    executor: android
-    steps:
-      - checkout
-      - determine_expo_sdk_version
-      - add_yarn_binaries_to_path
-      - determine_turtle_cache_key_component
-      - restore_turtle_cache
-      - run:
-          name: Installing gulp-cli & turtle-cli
-          command: yarn global add gulp-cli turtle-cli@$TURTLE_VERSION
-      - setup_turtle
-      - save_turtle_cache
-      - run:
-          name: Building Expo standalone app
-          command: |
-            echo $EXPO_ANDROID_KEYSTORE_BASE64 > expo-project.jks.base64
-            base64 --decode expo-project.jks.base64 > expo-project.jks
-            turtle build:android \
-              --keystore-path ./expo-project.jks \
-              --keystore-alias $EXPO_ANDROID_KEYSTORE_ALIAS \
-              --type apk \
-              -o ~/expo-project.apk
-      - store_artifacts:
-          path: ~/expo-project.apk
+  # build_android_apk:
+  #   executor: android
+  #   steps:
+  #     - checkout
+  #     - determine_expo_sdk_version
+  #     - add_yarn_binaries_to_path
+  #     - determine_turtle_cache_key_component
+  #     - restore_turtle_cache
+  #     - run:
+  #         name: Installing gulp-cli & turtle-cli
+  #         command: yarn global add gulp-cli turtle-cli@$TURTLE_VERSION
+  #     - setup_turtle
+  #     - save_turtle_cache
+  #     - run:
+  #         name: Building Expo standalone app
+  #         command: |
+  #           echo $EXPO_ANDROID_KEYSTORE_BASE64 > expo-project.jks.base64
+  #           base64 --decode expo-project.jks.base64 > expo-project.jks
+  #           turtle build:android \
+  #             --keystore-path ./expo-project.jks \
+  #             --keystore-alias $EXPO_ANDROID_KEYSTORE_ALIAS \
+  #             --type apk \
+  #             -o ~/expo-project.apk
+  #     - store_artifacts:
+  #         path: ~/expo-project.apk
 
-  build_android_aab:
-    executor: android
-    steps:
-      - checkout
-      - determine_expo_sdk_version
-      - add_yarn_binaries_to_path
-      - determine_turtle_cache_key_component
-      - restore_turtle_cache
-      - run:
-          name: Installing gulp-cli & turtle-cli
-          command: yarn global add gulp-cli turtle-cli@$TURTLE_VERSION
-      - setup_turtle
-      - save_turtle_cache
-      - run:
-          name: Building Expo standalone app
-          command: |
-            echo $EXPO_ANDROID_KEYSTORE_BASE64 > expo-project.jks.base64
-            base64 --decode expo-project.jks.base64 > expo-project.jks
-            turtle build:android \
-              --keystore-path ./expo-project.jks \
-              --keystore-alias $EXPO_ANDROID_KEYSTORE_ALIAS \
-              --type app-bundle \
-              -o ~/expo-project.aab
-      - store_artifacts:
-          path: ~/expo-project.aab
+  # build_android_aab:
+  #   executor: android
+  #   steps:
+  #     - checkout
+  #     - determine_expo_sdk_version
+  #     - add_yarn_binaries_to_path
+  #     - determine_turtle_cache_key_component
+  #     - restore_turtle_cache
+  #     - run:
+  #         name: Installing gulp-cli & turtle-cli
+  #         command: yarn global add gulp-cli turtle-cli@$TURTLE_VERSION
+  #     - setup_turtle
+  #     - save_turtle_cache
+  #     - run:
+  #         name: Building Expo standalone app
+  #         command: |
+  #           echo $EXPO_ANDROID_KEYSTORE_BASE64 > expo-project.jks.base64
+  #           base64 --decode expo-project.jks.base64 > expo-project.jks
+  #           turtle build:android \
+  #             --keystore-path ./expo-project.jks \
+  #             --keystore-alias $EXPO_ANDROID_KEYSTORE_ALIAS \
+  #             --type app-bundle \
+  #             -o ~/expo-project.aab
+  #     - store_artifacts:
+  #         path: ~/expo-project.aab
