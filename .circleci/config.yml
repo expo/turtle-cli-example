@@ -29,7 +29,7 @@ executors:
 
   ios:
     macos:
-      xcode: 10.1.0
+      xcode: 11.1.0
     working_directory: ~/expo-project
     environment:
       TURTLE_VERSION: 0.12.4
