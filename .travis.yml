@@ -10,7 +10,7 @@ branches:
 env:
   global:
     - EXPO_SDK_VERSION="35.0.0"
-    - TURTLE_VERSION="0.12.4"
+    - TURTLE_VERSION="0.12.5"
     - YARN_VERSION="1.10.1"
 
 jobs:
@@ -48,7 +48,7 @@ jobs:
         - yarn global add gulp-cli turtle-cli@$TURTLE_VERSION
       script:
         - export ARTIFACT_PATH="/home/travis/expo-project-$TRAVIS_COMMIT-`date +%s`.apk"
-        - turtle setup:android --sdk-version $EXPO_SDK_VERSION || travis_terminate 1
+        - turtle setup:android --sdk-version $EXPO_SDK_VERSION > /dev/null || travis_terminate 1
         - echo $EXPO_ANDROID_KEYSTORE_BASE64 > expo-project.jks.base64
         - base64 --decode expo-project.jks.base64 > expo-project.jks
         - turtle build:android
