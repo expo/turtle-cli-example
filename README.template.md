@@ -1,6 +1,6 @@
 # Turtle CLI usage example
 
-This is just a simple Expo app (generated with `expo init` command, `expo-template-tabs` template) that uses [CircleCI](https://circleci.com) and [Travis CI](https://travis-ci.org/) to build Expo standalone apps (for Android and iOS). It demonstrates how to leverage [turtle-cli](https://www.npmjs.com/package/turtle-cli) to build `.apk`/`.ipa` files without the need to use the Expo servers.
+This is just a simple Expo app (generated with `expo init` command, `expo-template-blank` template) that uses [CircleCI](https://circleci.com) and [Travis CI](https://travis-ci.org/) to build Expo standalone apps (for Android and iOS). It demonstrates how to leverage [turtle-cli](https://www.npmjs.com/package/turtle-cli) to build `.apk`/`.ipa` files without the need to use the Expo servers.
 
 ## Issues
 
