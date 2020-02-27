@@ -8,3 +8,5 @@ npm-debug.*
 *.mobileprovision
 *.swo
 *.swp
+turtle-cli-example_dist.password
+turtle-cli-example_apns_key.id
