@@ -10,7 +10,7 @@ branches:
 env:
   global:
     - EXPO_SDK_VERSION="36.0.0"
-    - TURTLE_VERSION="0.13.8"
+    - TURTLE_VERSION="0.13.9"
     - YARN_VERSION="1.21.1"
 
 jobs:
