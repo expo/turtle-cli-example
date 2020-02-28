@@ -1,8 +1,5 @@
 language: java
 
-node_js: "12.13.1"
-sudo: false
-
 branches:
   only:
   - master
@@ -11,6 +8,7 @@ env:
   global:
     - EXPO_SDK_VERSION="36.0.0"
     - TURTLE_VERSION="${TURTLE_VERSION_NEW}"
+    - NODE_VERSION="12.13.1"
     - YARN_VERSION="1.21.1"
 
 jobs:
@@ -22,6 +20,8 @@ jobs:
         directories:
           - $HOME/yarn_cache
       before_install:
+        - nvm install $NODE_VERSION
+        - nvm use $NODE_VERSION
         - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
         - export PATH="$HOME/.yarn/bin:$PATH"
       install:
@@ -33,14 +33,15 @@ jobs:
     - stage: build standalone apps
       env:
         - CACHE_NAME=build-android-v2 YARN_CACHE_FOLDER="/home/travis/yarn_cache"
-      jdk:
-        - openjdk8
+      jdk: openjdk8
       cache:
         directories:
           - $HOME/.turtle
           - $HOME/yarn_cache
           - $HOME/.gradle/wrapper
       before_install:
+        - nvm install $NODE_VERSION
+        - nvm use $NODE_VERSION
         - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
         - export PATH="$HOME/.yarn/bin:$PATH"
       install:
@@ -61,14 +62,15 @@ jobs:
     - stage: build standalone apps
       env:
         - CACHE_NAME=build-android-v2 YARN_CACHE_FOLDER="/home/travis/yarn_cache"
-      jdk:
-        - openjdk8
+      jdk: openjdk8
       cache:
         directories:
           - $HOME/.turtle
           - $HOME/yarn_cache
           - $HOME/.gradle/wrapper
       before_install:
+        - nvm install $NODE_VERSION
+        - nvm use $NODE_VERSION
         - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
         - export PATH="$HOME/.yarn/bin:$PATH"
       install:
@@ -90,7 +92,7 @@ jobs:
       os: osx
       osx_image: xcode11.2
       language: node_js
-      node_js: "12.13.1"
+      node_js: "12.13"
       env:
         - CACHE_NAME=build-ios-simulator YARN_CACHE_FOLDER="/Users/travis/yarn_cache"
       cache:
@@ -117,7 +119,7 @@ jobs:
       os: osx
       osx_image: xcode11.2
       language: node_js
-      node_js: "12.13.1"
+      node_js: "12.13"
       env:
         - CACHE_NAME=build-ios-ipa YARN_CACHE_FOLDER="/Users/travis/yarn_cache"
       cache:
