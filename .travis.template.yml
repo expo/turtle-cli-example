@@ -6,7 +6,7 @@ branches:
 
 env:
   global:
-    - EXPO_SDK_VERSION="36.0.0"
+    - EXPO_SDK_VERSION="37.0.0"
     - TURTLE_VERSION="${TURTLE_VERSION_NEW}"
     - NODE_VERSION="12.13.1"
     - YARN_VERSION="1.21.1"

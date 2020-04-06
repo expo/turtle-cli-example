@@ -23,6 +23,7 @@ executors:
     #    xcode: 10.1.0
     working_directory: ~/expo-project
     environment:
+      EXPO_SDK_VERSION: 37.0.0
       TURTLE_VERSION: ${TURTLE_VERSION_NEW}
       PLATFORM: android
       YARN_CACHE_FOLDER: ~/yarn_cache
@@ -32,6 +33,7 @@ executors:
       xcode: 11.1.0
     working_directory: ~/expo-project
     environment:
+      EXPO_SDK_VERSION: 37.0.0
       TURTLE_VERSION: ${TURTLE_VERSION_NEW}
       PLATFORM: ios
       YARN_CACHE_FOLDER: /Users/distiller/yarn_cache
@@ -45,12 +47,6 @@ commands:
           command: |
             brew install jq node@12
             brew link --overwrite --force node@12
-
-  determine_expo_sdk_version:
-    steps:
-      - run:
-          name: Determine Expo SDK version for this project
-          command: cat app.json | jq '.expo.sdkVersion' -r > /tmp/expo-sdk-version
 
   add_yarn_binaries_to_path:
     steps:
@@ -90,7 +86,7 @@ commands:
     steps:
       - run:
           name: Setting up environment for Turtle
-          command: turtle setup:$PLATFORM --sdk-version `cat /tmp/expo-sdk-version`
+          command: turtle setup:$PLATFORM --sdk-version $EXPO_SDK_VERSION
 
   restore_yarn_cache:
     steps:
@@ -149,7 +145,6 @@ jobs:
     steps:
       - checkout
       - install_macos_deps
-      - determine_expo_sdk_version
       - add_yarn_binaries_to_path
       - determine_turtle_cache_key_component
       - restore_turtle_cache
@@ -176,7 +171,6 @@ jobs:
     steps:
       - checkout
       - install_macos_deps
-      - determine_expo_sdk_version
       - add_yarn_binaries_to_path
       - determine_turtle_cache_key_component
       - restore_turtle_cache
@@ -197,7 +191,6 @@ jobs:
     executor: android
     steps:
       - checkout
-      - determine_expo_sdk_version
       - add_yarn_binaries_to_path
       - determine_turtle_cache_key_component
       - restore_turtle_cache
@@ -223,7 +216,6 @@ jobs:
     executor: android
     steps:
       - checkout
-      - determine_expo_sdk_version
       - add_yarn_binaries_to_path
       - determine_turtle_cache_key_component
       - restore_turtle_cache
