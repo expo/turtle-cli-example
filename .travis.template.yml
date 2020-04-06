@@ -48,6 +48,7 @@ jobs:
         - pip install --user awscli
         - yarn global add gulp-cli turtle-cli@$TURTLE_VERSION
       script:
+        - yarn
         - export ARTIFACT_PATH="/home/travis/expo-project-$TRAVIS_COMMIT-`date +%s`.apk"
         - turtle setup:android --sdk-version $EXPO_SDK_VERSION > /dev/null || travis_terminate 1
         - echo $EXPO_ANDROID_KEYSTORE_BASE64 > expo-project.jks.base64
@@ -77,6 +78,7 @@ jobs:
         - pip install --user awscli
         - yarn global add gulp-cli turtle-cli@$TURTLE_VERSION
       script:
+        - yarn
         - export ARTIFACT_PATH="/home/travis/expo-project-$TRAVIS_COMMIT-`date +%s`.aab"
         - turtle setup:android --sdk-version $EXPO_SDK_VERSION > /dev/null || travis_terminate 1
         - echo $EXPO_ANDROID_KEYSTORE_BASE64 > expo-project.jks.base64
@@ -103,10 +105,11 @@ jobs:
         - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
         - export PATH="$HOME/.yarn/bin:$PATH"
       install:
-        - pip install --user awscli
+        - pip2 install --user awscli
         - export PATH=/Users/travis/Library/Python/2.7/bin:$PATH
         - yarn global add turtle-cli@$TURTLE_VERSION
       script:
+        - yarn
         - export ARTIFACT_PATH="/Users/travis/expo-project-$TRAVIS_COMMIT-`date +%s`.tar.gz"
         - turtle setup:ios --sdk-version $EXPO_SDK_VERSION || travis_terminate 1
         - turtle build:ios
@@ -130,10 +133,11 @@ jobs:
         - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
         - export PATH="$HOME/.yarn/bin:$PATH"
       install:
-        - pip install --user awscli
+        - pip2 install --user awscli
         - export PATH=/Users/travis/Library/Python/2.7/bin:$PATH
         - yarn global add turtle-cli@$TURTLE_VERSION
       script:
+        - yarn
         - export ARTIFACT_PATH="/Users/travis/expo-project-$TRAVIS_COMMIT-`date +%s`.ipa"
         - turtle setup:ios --sdk-version $EXPO_SDK_VERSION || travis_terminate 1
         - echo $EXPO_IOS_DIST_P12_BASE64 > expo-project_dist.p12.base64
