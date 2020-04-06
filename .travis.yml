@@ -1,9 +1,5 @@
 language: java
 
-branches:
-  only:
-  - master
-
 env:
   global:
     - EXPO_SDK_VERSION="37.0.0"
@@ -13,83 +9,83 @@ env:
 
 jobs:
   include:
-    - stage: publish app
-      env:
-        - CACHE_NAME=publish YARN_CACHE_FOLDER="/home/travis/yarn_cache"
-      cache:
-        directories:
-          - $HOME/yarn_cache
-      before_install:
-        - nvm install $NODE_VERSION
-        - nvm use $NODE_VERSION
-        - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
-        - export PATH="$HOME/.yarn/bin:$PATH"
-      install:
-        - yarn global add expo-cli
-      script:
-        - expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD --non-interactive
-        - yarn
-        - expo publish
-    - stage: build standalone apps
-      env:
-        - CACHE_NAME=build-android-v2 YARN_CACHE_FOLDER="/home/travis/yarn_cache"
-      jdk: openjdk8
-      cache:
-        directories:
-          - $HOME/.turtle
-          - $HOME/yarn_cache
-          - $HOME/.gradle/wrapper
-      before_install:
-        - nvm install $NODE_VERSION
-        - nvm use $NODE_VERSION
-        - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
-        - export PATH="$HOME/.yarn/bin:$PATH"
-      install:
-        - python3 -m pip install --user awscli
-        - yarn global add gulp-cli turtle-cli@$TURTLE_VERSION
-      script:
-        - yarn
-        - export ARTIFACT_PATH="/home/travis/expo-project-$TRAVIS_COMMIT-`date +%s`.apk"
-        - turtle setup:android --sdk-version $EXPO_SDK_VERSION > /dev/null || travis_terminate 1
-        - echo $EXPO_ANDROID_KEYSTORE_BASE64 > expo-project.jks.base64
-        - base64 --decode expo-project.jks.base64 > expo-project.jks
-        - turtle build:android
-            --keystore-path ./expo-project.jks
-            --keystore-alias $EXPO_ANDROID_KEYSTORE_ALIAS
-            --type apk
-            -o $ARTIFACT_PATH
-      after_success:
-        - aws s3 cp $ARTIFACT_PATH s3://$AWS_BUCKET/`basename $ARTIFACT_PATH`
-    - stage: build standalone apps
-      env:
-        - CACHE_NAME=build-android-v2 YARN_CACHE_FOLDER="/home/travis/yarn_cache"
-      jdk: openjdk8
-      cache:
-        directories:
-          - $HOME/.turtle
-          - $HOME/yarn_cache
-          - $HOME/.gradle/wrapper
-      before_install:
-        - nvm install $NODE_VERSION
-        - nvm use $NODE_VERSION
-        - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
-        - export PATH="$HOME/.yarn/bin:$PATH"
-      install:
-        - python3 -m pip install --user awscli
-        - yarn global add gulp-cli turtle-cli@$TURTLE_VERSION
-      script:
-        - yarn
-        - export ARTIFACT_PATH="/home/travis/expo-project-$TRAVIS_COMMIT-`date +%s`.aab"
-        - turtle setup:android --sdk-version $EXPO_SDK_VERSION > /dev/null || travis_terminate 1
-        - echo $EXPO_ANDROID_KEYSTORE_BASE64 > expo-project.jks.base64
-        - base64 --decode expo-project.jks.base64 > expo-project.jks
-        - turtle build:android
-            --keystore-path ./expo-project.jks
-            --keystore-alias $EXPO_ANDROID_KEYSTORE_ALIAS
-            --type app-bundle
-            -o $ARTIFACT_PATH
-      after_success:
-        - aws s3 cp $ARTIFACT_PATH s3://$AWS_BUCKET/`basename $ARTIFACT_PATH`
+    # - stage: publish app
+    #   env:
+    #     - CACHE_NAME=publish YARN_CACHE_FOLDER="/home/travis/yarn_cache"
+    #   cache:
+    #     directories:
+    #       - $HOME/yarn_cache
+    #   before_install:
+    #     - nvm install $NODE_VERSION
+    #     - nvm use $NODE_VERSION
+    #     - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
+    #     - export PATH="$HOME/.yarn/bin:$PATH"
+    #   install:
+    #     - yarn global add expo-cli
+    #   script:
+    #     - expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD --non-interactive
+    #     - yarn
+    #     - expo publish
+    # - stage: build standalone apps
+    #   env:
+    #     - CACHE_NAME=build-android-v2 YARN_CACHE_FOLDER="/home/travis/yarn_cache"
+    #   jdk: openjdk8
+    #   cache:
+    #     directories:
+    #       - $HOME/.turtle
+    #       - $HOME/yarn_cache
+    #       - $HOME/.gradle/wrapper
+    #   before_install:
+    #     - nvm install $NODE_VERSION
+    #     - nvm use $NODE_VERSION
+    #     - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
+    #     - export PATH="$HOME/.yarn/bin:$PATH"
+    #   install:
+    #     - python3 -m pip install --user awscli
+    #     - yarn global add gulp-cli turtle-cli@$TURTLE_VERSION
+    #   script:
+    #     - yarn
+    #     - export ARTIFACT_PATH="/home/travis/expo-project-$TRAVIS_COMMIT-`date +%s`.apk"
+    #     - turtle setup:android --sdk-version $EXPO_SDK_VERSION > /dev/null || travis_terminate 1
+    #     - echo $EXPO_ANDROID_KEYSTORE_BASE64 > expo-project.jks.base64
+    #     - base64 --decode expo-project.jks.base64 > expo-project.jks
+    #     - turtle build:android
+    #         --keystore-path ./expo-project.jks
+    #         --keystore-alias $EXPO_ANDROID_KEYSTORE_ALIAS
+    #         --type apk
+    #         -o $ARTIFACT_PATH
+    #   after_success:
+    #     - aws s3 cp $ARTIFACT_PATH s3://$AWS_BUCKET/`basename $ARTIFACT_PATH`
+    # - stage: build standalone apps
+    #   env:
+    #     - CACHE_NAME=build-android-v2 YARN_CACHE_FOLDER="/home/travis/yarn_cache"
+    #   jdk: openjdk8
+    #   cache:
+    #     directories:
+    #       - $HOME/.turtle
+    #       - $HOME/yarn_cache
+    #       - $HOME/.gradle/wrapper
+    #   before_install:
+    #     - nvm install $NODE_VERSION
+    #     - nvm use $NODE_VERSION
+    #     - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version $YARN_VERSION
+    #     - export PATH="$HOME/.yarn/bin:$PATH"
+    #   install:
+    #     - python3 -m pip install --user awscli
+    #     - yarn global add gulp-cli turtle-cli@$TURTLE_VERSION
+    #   script:
+    #     - yarn
+    #     - export ARTIFACT_PATH="/home/travis/expo-project-$TRAVIS_COMMIT-`date +%s`.aab"
+    #     - turtle setup:android --sdk-version $EXPO_SDK_VERSION > /dev/null || travis_terminate 1
+    #     - echo $EXPO_ANDROID_KEYSTORE_BASE64 > expo-project.jks.base64
+    #     - base64 --decode expo-project.jks.base64 > expo-project.jks
+    #     - turtle build:android
+    #         --keystore-path ./expo-project.jks
+    #         --keystore-alias $EXPO_ANDROID_KEYSTORE_ALIAS
+    #         --type app-bundle
+    #         -o $ARTIFACT_PATH
+    #   after_success:
+    #     - aws s3 cp $ARTIFACT_PATH s3://$AWS_BUCKET/`basename $ARTIFACT_PATH`
     - stage: build standalone apps
       os: osx
       osx_image: xcode11.2
