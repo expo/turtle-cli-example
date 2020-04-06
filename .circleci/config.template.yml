@@ -89,17 +89,23 @@ commands:
           command: turtle setup:$PLATFORM --sdk-version $EXPO_SDK_VERSION
 
   restore_yarn_cache:
+    parameters:
+      platform:
+        type: string
     steps:
       - restore_cache:
           keys:
-          - cache-yarn-{{ checksum "package.json" }}
+          - cache-yarn-<< parameters.platform >>-{{ checksum "package.json" }}
 
   save_yarn_cache:
+    parameters:
+      platform:
+        type: string
     steps:
       - save_cache:
           paths:
             - ~/yarn_cache
-          key: cache-yarn-{{ checksum "package.json" }}
+          key: cache-yarn-<< parameters.platform >>-{{ checksum "package.json" }}
 
 workflows:
   version: 2
@@ -128,7 +134,8 @@ jobs:
     steps:
       - checkout
       - add_yarn_binaries_to_path
-      - restore_yarn_cache
+      - restore_yarn_cache:
+          platform: linux
       - run:
           name: Installing expo-cli
           command: yarn global add expo-cli
@@ -138,15 +145,18 @@ jobs:
             expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD --non-interactive
             yarn
             expo publish
-      - save_yarn_cache
+      - save_yarn_cache:
+          platform: linux
 
   build_ios_archive:
     executor: ios
     steps:
       - checkout
-      - restore_yarn_cache
+      - restore_yarn_cache:
+          platform: darwin
       - run: yarn
-      - save_yarn_cache
+      - save_yarn_cache:
+          platform: darwin
       - install_macos_deps
       - add_yarn_binaries_to_path
       - determine_turtle_cache_key_component
@@ -173,9 +183,11 @@ jobs:
     executor: ios
     steps:
       - checkout
-      - restore_yarn_cache
+      - restore_yarn_cache:
+          platform: darwin
       - run: yarn
-      - save_yarn_cache
+      - save_yarn_cache:
+          platform: darwin
       - install_macos_deps
       - add_yarn_binaries_to_path
       - determine_turtle_cache_key_component
@@ -197,9 +209,11 @@ jobs:
     executor: android
     steps:
       - checkout
-      - restore_yarn_cache
+      - restore_yarn_cache:
+          platform: linux
       - run: yarn
-      - save_yarn_cache
+      - save_yarn_cache:
+          platform: linux
       - add_yarn_binaries_to_path
       - determine_turtle_cache_key_component
       - restore_turtle_cache
@@ -225,9 +239,11 @@ jobs:
     executor: android
     steps:
       - checkout
-      - restore_yarn_cache
+      - restore_yarn_cache:
+          platform: linux
       - run: yarn
-      - save_yarn_cache
+      - save_yarn_cache:
+          platform: linux
       - add_yarn_binaries_to_path
       - determine_turtle_cache_key_component
       - restore_turtle_cache
