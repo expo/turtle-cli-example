@@ -23,7 +23,7 @@ executors:
     #    xcode: 10.1.0
     working_directory: ~/expo-project
     environment:
-      TURTLE_VERSION: 0.14.3
+      TURTLE_VERSION: 0.14.4
       PLATFORM: android
       YARN_CACHE_FOLDER: ~/yarn_cache
 
@@ -32,7 +32,7 @@ executors:
       xcode: 11.1.0
     working_directory: ~/expo-project
     environment:
-      TURTLE_VERSION: 0.14.3
+      TURTLE_VERSION: 0.14.4
       PLATFORM: ios
       YARN_CACHE_FOLDER: /Users/distiller/yarn_cache
       HOMEBREW_NO_AUTO_UPDATE: 1
