@@ -3,7 +3,6 @@
     "name": "turtle-cli-example",
     "slug": "turtle-cli-example",
     "privacy": "public",
-    "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
       "android",
