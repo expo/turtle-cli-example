@@ -23,7 +23,7 @@ executors:
     #    xcode: 10.1.0
     working_directory: ~/expo-project
     environment:
-      EXPO_SDK_VERSION: 37.0.0
+      EXPO_SDK_VERSION: ${APP_EXPO_SDK_VERSION}
       TURTLE_VERSION: ${TURTLE_VERSION_NEW}
       PLATFORM: android
       YARN_CACHE_FOLDER: ~/yarn_cache
@@ -33,7 +33,7 @@ executors:
       xcode: 11.1.0
     working_directory: ~/expo-project
     environment:
-      EXPO_SDK_VERSION: 37.0.0
+      EXPO_SDK_VERSION: ${APP_EXPO_SDK_VERSION}
       TURTLE_VERSION: ${TURTLE_VERSION_NEW}
       PLATFORM: ios
       YARN_CACHE_FOLDER: /Users/distiller/yarn_cache

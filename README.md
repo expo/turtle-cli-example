@@ -1,6 +1,6 @@
 # Turtle CLI usage example
 
-This is just a simple Expo app (generated with `expo init` command, `expo-template-blank` template) that uses [CircleCI](https://circleci.com) and [Travis CI](https://travis-ci.org/) to build Expo standalone apps (for Android and iOS). It demonstrates how to leverage [turtle-cli](https://www.npmjs.com/package/turtle-cli) to build `.apk`/`.ipa` files without the need to use the Expo servers.
+This is just a simple Expo app (generated with `expo init` command, `expo-template-blank` template) that uses [CircleCI](https://circleci.com) and [Travis CI](https://travis-ci.org/) to build Expo standalone apps (for Android and iOS). It demonstrates how to leverage [turtle-cli](https://www.npmjs.com/package/turtle-cli) to build `.apk`/`.aab`/`.ipa` files without the need to use the Expo servers.
 
 ## Issues
 
@@ -9,7 +9,7 @@ If you have problems with the code in this repository, please file issues & bug 
 ## CI pipelines
 
 The CI pipelines consist of two stages. In the first stage we publish the Expo project to the Expo servers using the `expo publish` command (see [Publishing](https://docs.expo.io/versions/latest/workflow/publishing) to learn more, if you would like to host your app on your own server, [see this guide](https://docs.expo.io/versions/latest/distribution/hosting-your-app)). In the second stage we build application binaries for:
-- Google Play Store - `.apk` file
+- Google Play Store - `.apk` and `.aab` files
 - Apple App Store - `.ipa` file
 - iOS simulator - in `.tar.gz` archive
 
@@ -46,7 +46,7 @@ You'll need to define all of the environment variables described above.
 
 ### Upgrading your app
 
-When you upgrade the Expo SDK version in your app, you should also modify the following section in `.circleci/config.yml` and update the `turtle-cli` version to the latest (the update is required to get a support for the new Expo SDK version!):
+When you upgrade the Expo SDK version in your app, you should also modify the following section in `.circleci/config.yml` and update the `turtle-cli` version to the latest (the update is required to get the support for the new Expo SDK version!):
 ```yaml
 android:
   # WARNING: medium (default) seems not to be enough for Turtle
@@ -56,7 +56,8 @@ android:
     - image: dsokal/expo-turtle-android
   working_directory: ~/expo-project
   environment:
-    TURTLE_VERSION: 0.14.5 # <<< PUT THE LATEST TURTLE-CLI VERSION HERE
+    EXPO_SDK_VERSION: 37.0.0 # << REPLACE WITH THE EXPO SDK VERSION OF YOUR APP
+    TURTLE_VERSION: 0.14.5   # << REPLACE THE LATEST TURTLE-CLI VERSION HERE
     PLATFORM: android
     YARN_CACHE_FOLDER: ~/yarn_cache
 
@@ -65,7 +66,8 @@ ios:
     xcode: 10.1.0
   working_directory: ~/expo-project
   environment:
-    TURTLE_VERSION: 0.14.5 # <<< PUT THE LATEST TURTLE-CLI VERSION HERE
+    EXPO_SDK_VERSION: 37.0.0 # << REPLACE WITH THE EXPO SDK VERSION OF YOUR APP
+    TURTLE_VERSION: 0.14.5   # << REPLACE THE LATEST TURTLE-CLI VERSION HERE
     PLATFORM: ios
     YARN_CACHE_FOLDER: /Users/distiller/yarn_cache
     HOMEBREW_NO_AUTO_UPDATE: 1
@@ -73,7 +75,7 @@ ios:
 
 ### Docker image for Android builds
 
-The Android executor uses `dsokal/expo-turtle-android` Docker Image. The image is based on `circleci/node:8.12` and has JDK 8 installed. See the [expo/expo-turtle-android](https://github.com/expo/expo-turtle-android) repository to learn more.
+The Android executor uses `dsokal/expo-turtle-android` Docker Image. The image is based on `circleci/node:12.13.1` and has JDK 8 installed. See the [expo/expo-turtle-android](https://github.com/expo/expo-turtle-android) repository to learn more.
 
 ## Travis CI
 
@@ -95,9 +97,10 @@ When you upgrade the Expo SDK version in your app, you should also modify the fo
 ```yaml
 env:
   global:
-    - EXPO_SDK_VERSION="32.0.0" # <<< PUT EXPO SDK VERSION HERE
-    - TURTLE_VERSION="0.14.5"    # <<< PUT THE LATEST TURTLE-CLI VERSION HERE
-    - YARN_VERSION="1.10.1"
+    - EXPO_SDK_VERSION="37.0.0"  # << REPLACE WITH THE EXPO SDK VERSION OF YOUR APP
+    - TURTLE_VERSION="0.14.5"    # << REPLACE THE LATEST TURTLE-CLI VERSION HERE
+    - NODE_VERSION="12.13.1"
+    - YARN_VERSION="1.21.1"
 ```
 
 ## Learn more
