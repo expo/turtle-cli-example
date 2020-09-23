@@ -111,10 +111,10 @@ workflows:
   version: 2
   builds:
     jobs:
-      - publish_app:
-          filters:
-            branches:
-              only: master
+      - publish_app
+          # filters:
+          #   branches:
+          #     only: master
       - build_ios_simulator:
           requires:
             - publish_app
