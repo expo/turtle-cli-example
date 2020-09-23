@@ -9,15 +9,15 @@
     "update-turtle-cli-version": "./update-turtle-cli-version.sh"
   },
   "dependencies": {
-    "expo": "^37.0.0",
-    "react": "16.9.0",
-    "react-dom": "16.9.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.0.tar.gz",
-    "react-native-web": "^0.11.7"
+    "expo": "^39.0.0",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.0.tar.gz",
+    "react-native-web": "~0.13.7"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
-    "babel-preset-expo": "^8.1.0"
+    "babel-preset-expo": "^8.3.0"
   },
   "private": true
 }
