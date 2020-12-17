@@ -24,7 +24,7 @@ executors:
     working_directory: ~/expo-project
     environment:
       EXPO_SDK_VERSION: 39.0.0
-      TURTLE_VERSION: 0.20.2
+      TURTLE_VERSION: 0.20.4
       PLATFORM: android
       YARN_CACHE_FOLDER: ~/yarn_cache
 
@@ -34,7 +34,7 @@ executors:
     working_directory: ~/expo-project
     environment:
       EXPO_SDK_VERSION: 39.0.0
-      TURTLE_VERSION: 0.20.2
+      TURTLE_VERSION: 0.20.4
       PLATFORM: ios
       YARN_CACHE_FOLDER: /Users/distiller/yarn_cache
       HOMEBREW_NO_AUTO_UPDATE: 1
