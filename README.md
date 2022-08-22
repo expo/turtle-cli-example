@@ -57,7 +57,7 @@ android:
   working_directory: ~/expo-project
   environment:
     EXPO_SDK_VERSION: 39.0.0 # << REPLACE WITH THE EXPO SDK VERSION OF YOUR APP
-    TURTLE_VERSION: 0.27.5   # << REPLACE THE LATEST TURTLE-CLI VERSION HERE
+    TURTLE_VERSION: 0.28.1   # << REPLACE THE LATEST TURTLE-CLI VERSION HERE
     PLATFORM: android
     YARN_CACHE_FOLDER: ~/yarn_cache
 
@@ -67,7 +67,7 @@ ios:
   working_directory: ~/expo-project
   environment:
     EXPO_SDK_VERSION: 39.0.0 # << REPLACE WITH THE EXPO SDK VERSION OF YOUR APP
-    TURTLE_VERSION: 0.27.5   # << REPLACE THE LATEST TURTLE-CLI VERSION HERE
+    TURTLE_VERSION: 0.28.1   # << REPLACE THE LATEST TURTLE-CLI VERSION HERE
     PLATFORM: ios
     YARN_CACHE_FOLDER: /Users/distiller/yarn_cache
     HOMEBREW_NO_AUTO_UPDATE: 1
@@ -98,7 +98,7 @@ When you upgrade the Expo SDK version in your app, you should also modify the fo
 env:
   global:
     - EXPO_SDK_VERSION="39.0.0"  # << REPLACE WITH THE EXPO SDK VERSION OF YOUR APP
-    - TURTLE_VERSION="0.27.5"    # << REPLACE THE LATEST TURTLE-CLI VERSION HERE
+    - TURTLE_VERSION="0.28.1"    # << REPLACE THE LATEST TURTLE-CLI VERSION HERE
     - NODE_VERSION="12.13.1"
     - YARN_VERSION="1.21.1"
 ```
